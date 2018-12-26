@@ -1,10 +1,9 @@
-
 #include"Pre.h"
 #include"LinkedQueue.h"
 
-
 //节点数计数变量
 int _count;
+int L_count;
 
 template<class T>
 struct BinaryTreeNode
@@ -31,8 +30,11 @@ static void Add1(BinaryTreeNode<T> *t)
 {
 	_count++;
 }
-
-
+template<class T>
+static void L_Count(BinaryTreeNode<T> * t)
+{
+		L_count++;
+}
 //二叉树类定义
 template<class T>
 class BinaryTree 
@@ -45,15 +47,22 @@ private:
 	void PostOrder(void(*Visit)(BinaryTreeNode<T>* u), BinaryTreeNode<T> * t);
 	void LevelOrder(void(*Visit)(BinaryTreeNode<T> *u));
 	int Height(BinaryTreeNode<T>*t)const; //返回树的高度
+	void CreateBiTree(BinaryTreeNode<T> * & t);
+	void Count_Leaves(void(*Visit)(BinaryTreeNode<T>* u), BinaryTreeNode<T> * t);
 public:
-	BinaryTree() { root = new BinaryTreeNode<T>; root = 0; }
+	BinaryTree() { //root = new BinaryTreeNode<T>; 
+		root = 0; }
 	~BinaryTree()
 	{
-		
+		Delete();
 	}
 	void Send(BinaryTreeNode<T>* u) { u = root; }
 	bool isEmpty()const { return ((root) ? false : true); }
 	bool Root(T x)const;
+	void CreateBiTree()
+	{
+		CreateBiTree(root);
+	}
 	void MakeTree(const T element, BinaryTree<T>& left, BinaryTree<T> & right);
 	void BreakTree( T element, BinaryTree<T>& left, BinaryTree<T> & right);
 	void PreOrder()
@@ -91,6 +100,12 @@ public:
 		BinaryTreeNode<T>*u = root;
 		return u;
 	}
+	//计算叶节点的数目
+	int Count_Leaves()
+	{
+		 Count_Leaves(L_Count,root);
+		 return L_count;
+	}
 };
 
 template<class T>
@@ -99,13 +114,9 @@ inline void BinaryTree<T>::PreOrder(void(*Visit)(BinaryTreeNode<T>*u), BinaryTre
 	//前序遍历
 	if (t)
 	{
-		Visit(t);
-		
-		PreOrder(Visit,t->LeftChild);
-		
-		PreOrder(Visit,t->RightChild);
-		
-		
+		Visit(t);		
+		PreOrder(Visit,t->LeftChild);		
+		PreOrder(Visit,t->RightChild);	
 	}
 	
 }
@@ -115,7 +126,6 @@ inline void BinaryTree<T>::InOrder(void(*Visit)(BinaryTreeNode<T>*u), BinaryTree
 {
 	if (t)
 	{
-		
 		InOrder(Visit, t->LeftChild);
 		Visit(t);
 		InOrder(Visit, t->RightChild);
@@ -149,6 +159,46 @@ bool BinaryTree<T>::Root(T x)const
 }
 
 template<class T>
+inline void BinaryTree<T>::CreateBiTree(BinaryTreeNode<T>*& t)
+{
+	static int flag = 1;	
+	if (flag == 1)
+	{
+		T ch=getchar();
+		if (ch == '\n') {
+			flag = 0;
+			return;
+		}
+		if (ch == ' ')t = NULL;
+		else
+		{
+			t = new BinaryTreeNode<T>;
+			t->LeftChild = t->RightChild = NULL;
+			t->data = ch;
+			CreateBiTree(t->LeftChild);
+			CreateBiTree(t->RightChild);
+		}
+	}
+	else
+		return;
+	
+}
+
+template<class T>
+inline void BinaryTree<T>::Count_Leaves(void(*Visit)(BinaryTreeNode<T>*u), BinaryTreeNode<T>* t)
+{
+	if (t==NULL)
+	{
+		Visit(t);
+	}
+	else
+	{
+		Count_Leaves(Visit,t->LeftChild);
+		Count_Leaves(Visit,t->RightChild);
+	}
+}
+
+template<class T>
 inline void BinaryTree<T>::MakeTree(const T element, BinaryTree<T>& left, BinaryTree<T>& right)
 {
 	/*将left和right 和element合并成一棵树
@@ -170,8 +220,6 @@ inline void BinaryTree<T>::MakeTree(const T element, BinaryTree<T>& left, Binary
 			root->LeftChild = left.root;
 			root->RightChild = right.root;
 	}
-	
-
 	//阻止访问原来的left和right
 	left.root = right.root = 0;
 }
@@ -182,7 +230,6 @@ inline void BinaryTree<T>::BreakTree(T element, BinaryTree<T>& left, BinaryTree<
 	//left ,right, this必须是不同的树
 	//检查树是否为空
 	if (!root)throw Out_Of_Bounds("The tree can't be empty");
-
 	//分解树
 	element = root->data;
 	left.root = root->LeftChild;
@@ -190,9 +237,6 @@ inline void BinaryTree<T>::BreakTree(T element, BinaryTree<T>& left, BinaryTree<
 	delete root;
 	root = 0;
 }
-
-
-
 template<class T>
 inline void BinaryTree<T>::LevelOrder(void(*Visit)(BinaryTreeNode<T>*u))
 {
@@ -203,21 +247,17 @@ inline void BinaryTree<T>::LevelOrder(void(*Visit)(BinaryTreeNode<T>*u))
 	while (t)
 	{
 		Visit(t);
-
 		//将孩子放入对列
 		if (t->LeftChild)Q.Add(t->LeftChild);
 		if (t->RightChild)Q.Add(t->RightChild);
-
 		//访问下一个节点
 		try {
 			Q.Delete(t);  //删除的下一欲访问的节点给t
 		}
-		catch (Out_Of_Bounds &os) { cout << os.Type_ex; return; }
-
+		catch (Out_Of_Bounds &os) { //cout << os.Type_ex;
+		return; }
 	}
-	
 }
-
 template<class T>
 inline int BinaryTree<T>::Height(BinaryTreeNode<T>* t) const
 {
@@ -228,8 +268,6 @@ inline int BinaryTree<T>::Height(BinaryTreeNode<T>* t) const
 	else
 		return ++hR;
 }
-
-
 //递归后序复制
 template<class T>
 BinaryTreeNode<T> * CopyTree(BinaryTreeNode<T>* tree)
@@ -244,26 +282,4 @@ BinaryTreeNode<T> * CopyTree(BinaryTreeNode<T>* tree)
 	root->LeftChild = ltree;
 	root->RightChild = rtree;
 	return root;
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

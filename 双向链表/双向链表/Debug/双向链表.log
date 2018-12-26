@@ -1,0 +1,3 @@
+﻿  function.cpp
+LINK : warning LNK4044: 无法识别的选项“/VERBOSE[:{ICF|INCR|LIB|REF|SAFESEH|UNUSEDLIBS}]”；已忽略
+  双向链表.vcxproj -> F:\数据结构-算法与应用-C++\双向链表\Debug\双向链表.exe
