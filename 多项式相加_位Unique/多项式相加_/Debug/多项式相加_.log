@@ -1,0 +1,3 @@
+﻿  源.cpp
+f:\数据结构-算法与应用-c++\多项式相加_位unique\多项式相加_\polynomial.h(304): warning C4715: “Polynomial::operator=”: 不是所有的控件路径都返回值
+  多项式相加_.vcxproj -> F:\数据结构-算法与应用-C++\多项式相加_位Unique\Debug\多项式相加_.exe
