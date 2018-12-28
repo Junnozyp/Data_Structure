@@ -1,0 +1,42 @@
+﻿  源.cpp
+f:\数据结构-算法与应用-c++\二叉树\二叉树\binarytree.h(125): error C2248: “BinaryTreeNode<T>::LeftChild”: 无法访问 private 成员(在“BinaryTreeNode<T>”类中声明)
+          with
+          [
+              T=int
+          ]
+  f:\数据结构-算法与应用-c++\二叉树\二叉树\binarytree.h(11): note: 参见“BinaryTreeNode<T>::LeftChild”的声明
+          with
+          [
+              T=int
+          ]
+  f:\数据结构-算法与应用-c++\二叉树\二叉树\binarytree.h(85): note: 参见“BinaryTreeNode<T>”的声明
+          with
+          [
+              T=int
+          ]
+  f:\数据结构-算法与应用-c++\二叉树\二叉树\binarytree.h(120): note: 编译 类 模板 成员函数 "void BinaryTree<int>::PreOrder(void (__cdecl *)(BinaryTreeNode<T> *),BinaryTreeNode<T> *)" 时
+          with
+          [
+              T=int
+          ]
+  f:\数据结构-算法与应用-c++\二叉树\二叉树\binarytree.h(104): note: 参见对正在编译的函数 模板 实例化“void BinaryTree<int>::PreOrder(void (__cdecl *)(BinaryTreeNode<T> *),BinaryTreeNode<T> *)”的引用
+          with
+          [
+              T=int
+          ]
+  f:\数据结构-算法与应用-c++\二叉树\二叉树\源.cpp(7): note: 参见对正在编译的 类 模板 实例化 "BinaryTree<int>" 的引用
+f:\数据结构-算法与应用-c++\二叉树\二叉树\binarytree.h(126): error C2248: “BinaryTreeNode<T>::RightChild”: 无法访问 private 成员(在“BinaryTreeNode<T>”类中声明)
+          with
+          [
+              T=int
+          ]
+  f:\数据结构-算法与应用-c++\二叉树\二叉树\binarytree.h(12): note: 参见“BinaryTreeNode<T>::RightChild”的声明
+          with
+          [
+              T=int
+          ]
+  f:\数据结构-算法与应用-c++\二叉树\二叉树\binarytree.h(85): note: 参见“BinaryTreeNode<T>”的声明
+          with
+          [
+              T=int
+          ]
